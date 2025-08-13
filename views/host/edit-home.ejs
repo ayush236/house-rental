@@ -1,0 +1,47 @@
+<%-include('../partial/boiler') %>
+<body class="h-full bg-gray-50">
+  <!-- Navbar -->
+  <%-include('../partial/nav') %>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto mt-12 p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6"><%= editing? "Edit": "Submit" %>Your Details</h1>
+    <form action="/<%= editing ? 'edit-home' : 'submit-home' %>" method="POST"  class="space-y-6">
+      <!-- Image Upload -->
+      <div>
+        <label for="image" class="block text-gray-700 font-medium mb-2">Upload Image</label>
+        <input type="text"  id="image" name="image" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      </div>
+
+      <!-- Name -->
+      <div>
+        <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
+        <input type="text" id="name" value="<%= editing? house.name : '' %> " name="name" placeholder="Enter your name" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      </div>
+
+      <!-- Address -->
+      <div>
+        <label for="address" class="block text-gray-700 font-medium mb-2">Address</label>
+        <input type="text" id="address" value="<%= editing? house.address : '' %>" name="address" placeholder="Enter your address" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      </div>
+
+      <!-- Rating -->
+      <div>
+        <label for="rating" class="block text-gray-700 font-medium mb-2">Rating</label>
+        <input type="number" id="rating" value="<%= editing? house.rating : '' %>" name="rating" placeholder="Rate out of 5" min="1" max="5" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      </div>
+
+      <!-- Cost -->
+      <div>
+        <label for="cost" class="block text-gray-700 font-medium mb-2">Cost</label>
+        <input type="number" id="cost" value="<%= editing? house.cost : ''%>" name="cost" placeholder="Enter cost" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-lg hover:bg-indigo-700 transition"><%= editing ? "Update house" : "Add to Home" %></button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>
