@@ -9,10 +9,12 @@ const favourite = require("../models/favourite");
 // showing the data at home 
 
 exports.Index=(req, res, next)=>{
-    Home.fetchAll(Rendering =>res.render('store/index.ejs', 
+    Home.fetchAll().then(([Rendering]) =>{
+        res.render('store/index.ejs', 
         { RegisterHome: Rendering,
         title: "INDEX"
-    }));
+        }
+    )});
     console.log('this the home page');
 }
 
@@ -20,10 +22,11 @@ exports.Index=(req, res, next)=>{
 // showing the data at home 
 
 exports.getHome=(req, res, next)=>{
-    Home.fetchAll(Rendering =>res.render('store/home-list.ejs', 
+Home.fetchAll().then(([Rendering]) =>{        
+    res.render('store/home-list.ejs', 
         { RegisterHome: Rendering,
         title: "HomePage"
-    }));
+    })});
     console.log('this the home page');
 }
 
@@ -35,9 +38,10 @@ exports.getHome=(req, res, next)=>{
 exports.getbooking =(req, res, next)=>{
 
     console.log('this is the booking site of the customer');
-    Home.fetchAll(Rendering =>res.render('store/booking.ejs', 
+    Home.fetchAll().then(([Rendering]) =>{
+        res.render('store/booking.ejs', 
         { title: "BOOKING"
-    }));
+    })});
 }
 
 //favourite-list 
@@ -47,7 +51,7 @@ exports.favourite =(req, res, next)=>{
 
     console.log('this is favourite-list')
     favourite.getFavourite((favourites)=>{
-    Home.fetchAll((Rendering) =>{
+    Home.fetchAll().then(([Rendering]) =>{
         const favouritehouse = Rendering.filter(house =>
             favourites.includes(house.id)
         )
@@ -64,7 +68,8 @@ exports.favourite =(req, res, next)=>{
 exports. getHomeDetail = (req, res, next)=>{
     const houseid = req.params.HomeID;
     console.log("this is the value of id",houseid);
-    Home.FindById(houseid, house=>{
+    Home.FindById(houseid).then(([houses])=>{
+        const house = houses[0];
         if(!house){
             console.log("house is not found")
             res.redirect('/Home')

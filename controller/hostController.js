@@ -20,7 +20,8 @@ exports.addHome=(req, res, next)=>{
 exports.getEditHome=(req, res, next)=>{
     const houseId = req.params.houseId;
     const editing = req.query.editing === "true";
-    Home.FindById(houseId, house=>{
+    Home.FindById(houseId).then(([houses])=>{
+        const house = houses[0]
         if(!house){
             console.log("house can't be found");
             return req.redirect('/host-home-list')
@@ -43,10 +44,11 @@ exports.getEditHome=(req, res, next)=>{
 // showing the data to host
 
 exports.getHostHome=(req, res, next)=>{
-    Home.fetchAll(Rendering =>res.render('host/host-home-list.ejs', 
+    Home.fetchAll().then(([Rendering]) =>{
+        res.render('host/host-home-list.ejs', 
         { RegisterHome: Rendering,
         title: "host-home"
-    }));
+    })});
     console.log('this the home page');
 }
 
@@ -57,8 +59,8 @@ exports.getHostHome=(req, res, next)=>{
 exports.submitHome=(req, res, next)=>{
     
     // console.log('this the add-home page',req.body)
-    const {image,  name, address, rating, cost}= req.body;
-    const home = new Home(image,  name, address, rating, cost);
+    const {image,  name, address, rating, cost, description,id}= req.body;
+    const home = new Home(image,  name, address, rating, cost, description, id);
     // const home = new Home(req.body.image, req.body.name, req.body.address, req.body.rating, req.body.cost);
     home.save();
 
@@ -71,10 +73,9 @@ exports.submitHome=(req, res, next)=>{
 // post-edit-home
 
 exports.PostEditHome = (req, res, next)=>{
-    const {id, image, name, address, rating, cost} = req.body;
-    const home = new Home(image, name, address, rating, cost);
-    home.id = id;
-    home.save();
+    const {image, name, address, rating, cost, description, id } = req.body;
+    const home = new Home(image, name, address, rating, cost, description, id);
+     home.save();
 
     res.redirect('/Host-Home-list');
 
@@ -84,13 +85,11 @@ exports.PostEditHome = (req, res, next)=>{
 exports.PostDeleteHome = (req, res, next)=>{
     const homeId =req.params.homeId;
     console.log("Delete this id", homeId);
-    Home.DeleteById(homeId, error=>{
-        if(error){
-            console.log('eror is here ', error);
-        }
+    Home.DeleteById(homeId).then(()=>{
     res.redirect('/Host-Home-list');
-
-    })
+    }).catch((error)=>{
+        console.log("error while fatching",error)
+    });
 }
 
 

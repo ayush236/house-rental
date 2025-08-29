@@ -40,6 +40,12 @@
         <input type="number" id="cost" value="<%= editing? house.cost : ''%>" name="cost" placeholder="Enter cost" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
       </div>
 
+      <!--description-->
+      <div>
+        <label for="image" class="block text-gray-700 font-medium mb-2">Description</label>
+        <textarea  id="description"  name="description" placeholder="description" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"><%=editing? house.description : '' %></textarea>
+      </div>
+
       <!-- Submit Button -->
       <div>
         <input type="submit" value="<%= editing ? 'Update house' : 'Add to Home' %>" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-lg hover:bg-indigo-700 transition"></input>

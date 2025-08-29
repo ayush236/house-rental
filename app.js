@@ -6,6 +6,9 @@ const StoreRouter = require('./router/StoreRouter')
 const {HostRouter} = require('./router/HostRouter')
 const {error} = require('./controller/error')
 
+
+
+
 const app = express();
 
 app.set('view enginee', 'ejs');
@@ -13,6 +16,9 @@ app.set('views', 'views');
 app.use(express.urlencoded());
 app.use(StoreRouter);
 app.use(HostRouter);
+
+
+
 app.use(error);
 
 
