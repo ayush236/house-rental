@@ -7,10 +7,13 @@
   <main class="max-w-4xl mx-auto mt-12 p-6 bg-white rounded-lg shadow-md">
     <h1 class="text-3xl font-bold text-gray-800 mb-6"><%= editing? "Edit": "Submit" %>Your Details</h1>
     <form action="/<%= editing ? 'edit-home' : 'submit-home' %>" method="POST"  class="space-y-6">
+
+      <!-- id file but it is hiden-->
+       <input type="hidden" name="id" value="<%= editing? house.id : '' %>"/>
       <!-- Image Upload -->
       <div>
         <label for="image" class="block text-gray-700 font-medium mb-2">Upload Image</label>
-        <input type="text"  id="image" name="image" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <input type="text"  id="image" value="<%= editing? house.image : ''%>" name="image" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
       </div>
 
       <!-- Name -->
@@ -37,9 +40,15 @@
         <input type="number" id="cost" value="<%= editing? house.cost : ''%>" name="cost" placeholder="Enter cost" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
       </div>
 
+      <!--description-->
+      <div>
+        <label for="image" class="block text-gray-700 font-medium mb-2">Description</label>
+        <textarea  id="description"  name="description" placeholder="description" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"><%=editing? house.description : '' %></textarea>
+      </div>
+
       <!-- Submit Button -->
       <div>
-        <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-lg hover:bg-indigo-700 transition"><%= editing ? "Update house" : "Add to Home" %></button>
+        <input type="submit" value="<%= editing ? 'Update house' : 'Add to Home' %>" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-lg hover:bg-indigo-700 transition"></input>
       </div>
     </form>
   </main>

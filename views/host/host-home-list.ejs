@@ -61,9 +61,11 @@
             Edit
           </button>
         </a>
-          <button class=" w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition">
+        <form action="/host/delete-home/<%= house.id%>" method="POST">
+          <button class=" w-24 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition">
             Delete
           </button>
+          </form>
           </div>
         </div>
       </div>

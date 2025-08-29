@@ -10,6 +10,8 @@ StoreRouter.get('/favourite', Controllor.favourite);
 
 StoreRouter.get('/Home/:HomeID', Controllor.getHomeDetail)
 StoreRouter.post('/favourite',Controllor.getaddfavourite);
+StoreRouter.post('/favourite/delete/:homeId', Controllor.postDeletefavourite);
+
 
 
 module.exports = StoreRouter;

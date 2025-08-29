@@ -1,42 +1,46 @@
-const fs = require('fs')
-const rootDir = require('../utils/path')
-const path = require('path');
-const filepath = path.join(rootDir, 'Data', 'home.json')
+const db = require('../utils/databaseutil')
 
-
-
-//fake database
-// const RegisterHome = [];
 
 
 module.exports = class Home{
-    constructor(image,  name, address, rating, cost){
+    constructor(image,  name, address, rating, cost, description, id){
         this.image = image;
         this.name = name;
         this.address = address;
         this.rating = rating;
         this.cost = cost;
+        this.description = description;
+        this.id = id;
     }
     save(){
-        this.id = Math.random().toString();
-        Home.fetchAll(RegisterHome =>{RegisterHome.push(this);
-        fs.writeFile(filepath, JSON.stringify(RegisterHome), (error)=>{
-            console.log('file writinf is concluded', error);
-        });
-        });
+        if(this.id){
+            return db.execute(
+  'UPDATE  homes SET image =?, name =?, address=?, rating =?, cost =?, description =? WHERE id = ? ',[this.image, this.name, this.address, this.rating, this.cost, this.description, this.id ]
+);
+        }
+        else{
+            //insert the data
+              return db.query(
+  'INSERT INTO homes (image, name, address, rating, cost, description) VALUES (?, ?, ?, ?, ?, ?)',[this.image, this.name, this.address, this.rating, this.cost, this.description]
+);
+        }
+      
+
+        
     }
-    static fetchAll(callback){
-        fs.readFile(filepath, (error, data)=>{
-            console.log("file is read:", error, data);
-            callback(!error ? JSON.parse(data) : []);
-        });
+    static fetchAll(){
+       return db.query('SELECT * FROM homes');
+        
     }
 
-    static FindById(HomeID, callback){
-        this.fetchAll(houses=>{
-            const house = houses.find((house)=>
-                house.id === HomeID);
-            callback(house);      
-        })
+    static FindById(HomeID){
+        return db.execute('SELECT * FROM homes WHERE id = ?',[HomeID])
+
+        
+    }
+
+    static DeleteById(HomeID){
+        return db.execute('DELETE FROM homes WHERE id = ?', [HomeID])
+        
     }
 }
