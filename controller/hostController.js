@@ -25,7 +25,7 @@ exports.getEditHome=(req, res, next)=>{
             console.log("house can't be found");
             return req.redirect('/host-home-list')
         }
-        console.log(houseId, editing, house)
+        console.log(houseId, editing, houses)
         console.log('this the edit-home page')
         res.render('host/edit-home.ejs', {
         title: "editing-page",
@@ -75,7 +75,9 @@ exports.submitHome=(req, res, next)=>{
 exports.PostEditHome = (req, res, next)=>{
     const {image, name, address, rating, cost, description, id } = req.body;
     const home = new Home(image, name, address, rating, cost, description, id);
-     home.save();
+     home.save().then(result=>{
+        console.log("upadte the home detail", result);
+     });
 
     res.redirect('/Host-Home-list');
 

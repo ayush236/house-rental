@@ -18,8 +18,24 @@ module.exports = class Home{
     }
     save(){
         const db = getDB();
-        const value= db.collection("homes").insertOne(this);
-        return value;
+        if (this._id){ //update case
+            const update={
+                image : this.image,
+                  name : this.name,
+                   address : this.address,
+                    rating : this.rating,
+                     cost : this.cost,
+                      description : this.description, 
+
+            }
+            return db.collection('homes')
+            .updateOne({_id : new ObjectId(String(this._id))}, {$set: update})
+
+        }else{ // insert case
+            return db.collection("homes").insertOne(this);
+        
+
+        }
     }
         
     
