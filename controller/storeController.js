@@ -9,7 +9,7 @@ const favourite = require("../models/favourite");
 // showing the data at home 
 
 exports.Index=(req, res, next)=>{
-    Home.fetchAll().then(([Rendering]) =>{
+    Home.fetchAll().then(Rendering =>{
         res.render('store/index.ejs', 
         { RegisterHome: Rendering,
         title: "INDEX"
@@ -22,7 +22,7 @@ exports.Index=(req, res, next)=>{
 // showing the data at home 
 
 exports.getHome=(req, res, next)=>{
-Home.fetchAll().then(([Rendering]) =>{        
+Home.fetchAll().then(Rendering =>{        
     res.render('store/home-list.ejs', 
         { RegisterHome: Rendering,
         title: "HomePage"
@@ -38,7 +38,7 @@ Home.fetchAll().then(([Rendering]) =>{
 exports.getbooking =(req, res, next)=>{
 
     console.log('this is the booking site of the customer');
-    Home.fetchAll().then(([Rendering]) =>{
+    Home.fetchAll().then(Rendering =>{
         res.render('store/booking.ejs', 
         { title: "BOOKING"
     })});
@@ -51,9 +51,9 @@ exports.favourite =(req, res, next)=>{
 
     console.log('this is favourite-list')
     favourite.getFavourite((favourites)=>{
-    Home.fetchAll().then(([Rendering]) =>{
+    Home.fetchAll().then(Rendering =>{
         const favouritehouse = Rendering.filter(house =>
-            favourites.includes(house.id)
+            favourites.includes(house._id)
         )
         res.render('store/favourite-list.ejs',{
         favouritehouse: favouritehouse,
@@ -68,16 +68,15 @@ exports.favourite =(req, res, next)=>{
 exports. getHomeDetail = (req, res, next)=>{
     const houseid = req.params.HomeID;
     console.log("this is the value of id",houseid);
-    Home.FindById(houseid).then(([houses])=>{
-        const house = houses[0];
-        if(!house){
+    Home.FindById(houseid).then(houses=>{
+        if(!houses){
             console.log("house is not found")
             res.redirect('/Home')
         }else{
-            console.log("house is found", house)
+            console.log("house is found", houses)
             res.render('store/home-detail.ejs',{
             title: "HOMEDETAIL",
-            house: house
+            house: houses
     })
         } 
     })

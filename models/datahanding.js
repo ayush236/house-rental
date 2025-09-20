@@ -1,46 +1,49 @@
-const db = require('../utils/databaseutil')
+const { ObjectId } = require('mongodb');
+const { getDB } = require('../utils/databaseutil')
 
 
 
 module.exports = class Home{
-    constructor(image,  name, address, rating, cost, description, id){
+    constructor(image,  name, address, rating, cost, description, _id){
         this.image = image;
         this.name = name;
         this.address = address;
         this.rating = rating;
         this.cost = cost;
         this.description = description;
-        this.id = id;
-    }
-    save(){
-        if(this.id){
-            return db.execute(
-  'UPDATE  homes SET image =?, name =?, address=?, rating =?, cost =?, description =? WHERE id = ? ',[this.image, this.name, this.address, this.rating, this.cost, this.description, this.id ]
-);
+        if(_id){
+            this._id = _id;
         }
-        else{
-            //insert the data
-              return db.query(
-  'INSERT INTO homes (image, name, address, rating, cost, description) VALUES (?, ?, ?, ?, ?, ?)',[this.image, this.name, this.address, this.rating, this.cost, this.description]
-);
-        }
-      
-
         
     }
+    save(){
+        const db = getDB();
+        const value= db.collection("homes").insertOne(this);
+        return value;
+    }
+        
+    
     static fetchAll(){
-       return db.query('SELECT * FROM homes');
+        const db =getDB();
+        return  db.collection("homes").find().toArray();
         
     }
 
     static FindById(HomeID){
-        return db.execute('SELECT * FROM homes WHERE id = ?',[HomeID])
-
-        
+        const db =getDB();
+        return db.collection("homes")
+        .find({
+            _id : new ObjectId(String(HomeID)) 
+        })
+        .next();
     }
 
     static DeleteById(HomeID){
-        return db.execute('DELETE FROM homes WHERE id = ?', [HomeID])
-        
+        const db = getDB();
+        return db.collection("homes")
+        .deleteOne({
+            _id : new ObjectId(String(HomeID))
+        })
     }
-}
+
+    }

@@ -9,7 +9,7 @@
     <form action="/<%= editing ? 'edit-home' : 'submit-home' %>" method="POST"  class="space-y-6">
 
       <!-- id file but it is hiden-->
-       <input type="hidden" name="id" value="<%= editing? house.id : '' %>"/>
+       <input type="hidden" name="id" value="<%= editing? house._id : '' %>"/>
       <!-- Image Upload -->
       <div>
         <label for="image" class="block text-gray-700 font-medium mb-2">Upload Image</label>

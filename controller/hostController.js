@@ -20,9 +20,8 @@ exports.addHome=(req, res, next)=>{
 exports.getEditHome=(req, res, next)=>{
     const houseId = req.params.houseId;
     const editing = req.query.editing === "true";
-    Home.FindById(houseId).then(([houses])=>{
-        const house = houses[0]
-        if(!house){
+    Home.FindById(houseId).then(houses=>{
+        if(!houses){
             console.log("house can't be found");
             return req.redirect('/host-home-list')
         }
@@ -31,7 +30,7 @@ exports.getEditHome=(req, res, next)=>{
         res.render('host/edit-home.ejs', {
         title: "editing-page",
         editing: editing,
-        house: house
+        house: houses
         
     });
     })
@@ -44,7 +43,7 @@ exports.getEditHome=(req, res, next)=>{
 // showing the data to host
 
 exports.getHostHome=(req, res, next)=>{
-    Home.fetchAll().then(([Rendering]) =>{
+    Home.fetchAll().then(Rendering =>{
         res.render('host/host-home-list.ejs', 
         { RegisterHome: Rendering,
         title: "host-home"
@@ -62,12 +61,13 @@ exports.submitHome=(req, res, next)=>{
     const {image,  name, address, rating, cost, description,id}= req.body;
     const home = new Home(image,  name, address, rating, cost, description, id);
     // const home = new Home(req.body.image, req.body.name, req.body.address, req.body.rating, req.body.cost);
-    home.save();
-
+    home.save().then(()=>{
+        console.log('submit the homes SUCCESS');
+    });
     res.render('store/submit.ejs', {
         title: "submitHome" 
     });
-}
+};
 
 
 // post-edit-home

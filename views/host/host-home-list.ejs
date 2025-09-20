@@ -56,12 +56,12 @@
 
           <!-- Booking Button -->
            <div class=" flex gap-8 ">
-            <a href="/host/editing-home/<%= house.id %>?editing=true">
+            <a href="/host/editing-home/<%= house._id %>?editing=true">
            <button class=" w-24 bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
             Edit
           </button>
         </a>
-        <form action="/host/delete-home/<%= house.id%>" method="POST">
+        <form action="/host/delete-home/<%= house._id%>" method="POST">
           <button class=" w-24 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition">
             Delete
           </button>
