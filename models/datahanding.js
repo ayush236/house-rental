@@ -1,65 +1,40 @@
 const { ObjectId } = require('mongodb');
-const { getDB } = require('../utils/databaseutil')
+const mongoose = require('mongoose');
+
+
+const HomeSchema = mongoose.Schema({
+    image:{
+        type: String,
+        required: true
+    },
+    name:{
+        type: String,
+        required: true
+    },
+    address:{
+        type: String,
+        required: true
+    },
+    rating:{
+        type: Number,
+        required: true
+    },
+    cost:{
+        type: Number,
+        required: true
+    },
+    description: String
+});
+
+module. exports = mongoose.model("Home", HomeSchema);
 
 
 
-module.exports = class Home{
-    constructor(image,  name, address, rating, cost, description, _id){
-        this.image = image;
-        this.name = name;
-        this.address = address;
-        this.rating = rating;
-        this.cost = cost;
-        this.description = description;
-        if(_id){
-            this._id = _id;
-        }
+
+  
         
-    }
-    save(){
-        const db = getDB();
-        if (this._id){ //update case
-            const update={
-                image : this.image,
-                  name : this.name,
-                   address : this.address,
-                    rating : this.rating,
-                     cost : this.cost,
-                      description : this.description, 
-
-            }
-            return db.collection('homes')
-            .updateOne({_id : new ObjectId(String(this._id))}, {$set: update})
-
-        }else{ // insert case
-            return db.collection("homes").insertOne(this);
+    // save()
+    // static fetchAll()
+    // static FindById(HomeID)
+    // static DeleteById(HomeID)
         
-
-        }
-    }
-        
-    
-    static fetchAll(){
-        const db =getDB();
-        return  db.collection("homes").find().toArray();
-        
-    }
-
-    static FindById(HomeID){
-        const db =getDB();
-        return db.collection("homes")
-        .find({
-            _id : new ObjectId(String(HomeID)) 
-        })
-        .next();
-    }
-
-    static DeleteById(HomeID){
-        const db = getDB();
-        return db.collection("homes")
-        .deleteOne({
-            _id : new ObjectId(String(HomeID))
-        })
-    }
-
-    }

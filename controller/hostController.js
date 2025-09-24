@@ -58,8 +58,8 @@ exports.getHostHome=(req, res, next)=>{
 exports.submitHome=(req, res, next)=>{
     
     // console.log('this the add-home page',req.body)
-    const {image,  name, address, rating, cost, description,id}= req.body;
-    const home = new Home(image,  name, address, rating, cost, description, id);
+    const {image,  name, address, rating, cost, description}= req.body;
+    const home = new Home({image,  name, address, rating, cost, description});
     // const home = new Home(req.body.image, req.body.name, req.body.address, req.body.rating, req.body.cost);
     home.save().then(()=>{
         console.log('submit the homes SUCCESS');
