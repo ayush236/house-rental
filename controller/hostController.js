@@ -20,7 +20,7 @@ exports.addHome=(req, res, next)=>{
 exports.getEditHome=(req, res, next)=>{
     const houseId = req.params.houseId;
     const editing = req.query.editing === "true";
-    Home.FindById(houseId).then(houses=>{
+    Home.findById(houseId).then(houses=>{
         if(!houses){
             console.log("house can't be found");
             return req.redirect('/host-home-list')
@@ -43,7 +43,7 @@ exports.getEditHome=(req, res, next)=>{
 // showing the data to host
 
 exports.getHostHome=(req, res, next)=>{
-    Home.fetchAll().then(Rendering =>{
+    Home.find().then(Rendering =>{
         res.render('host/host-home-list.ejs', 
         { RegisterHome: Rendering,
         title: "host-home"
@@ -74,20 +74,29 @@ exports.submitHome=(req, res, next)=>{
 
 exports.PostEditHome = (req, res, next)=>{
     const {image, name, address, rating, cost, description, id } = req.body;
-    const home = new Home(image, name, address, rating, cost, description, id);
-     home.save().then(result=>{
+    Home.findById(id).then(home=>{
+        home.image = image; 
+        home.name=name;
+        home.address=address;
+        home.rating=rating;
+        home.cost=cost;
+        home.description=description;
+          home.save().then(result=>{
         console.log("upadte the home detail", result);
-     });
-
+     }).catch(error=>{
+        console.log('Occure Error:',error);
+     })
     res.redirect('/Host-Home-list');
-
+    }).catch(error=>{
+        console.log("error while finding home:", error);
+    })
 }
 
 // delete-home
 exports.PostDeleteHome = (req, res, next)=>{
     const homeId =req.params.homeId;
     console.log("Delete this id", homeId);
-    Home.DeleteById(homeId).then(()=>{
+    Home.findByIdAndDelete(homeId).then(()=>{
     res.redirect('/Host-Home-list');
     }).catch((error)=>{
         console.log("error while fatching",error)

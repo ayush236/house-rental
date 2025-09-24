@@ -1,49 +1,50 @@
 <!-- Cards Section -->
-  <section class="max-w-6xl mx-auto flex flex-wrap justify-center gap-8 mt-12 p-6">
-    <% RegisterHome.forEach(house => { %>
-      <div class="w-full sm:w-72 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
-        <!-- Card Image -->
-        <img
-          class="w-full h-48 object-cover"
-          src="<%= house.image %>"
-          alt="<%= house.name %>"
-        >
+<section class="max-w-6xl mx-auto flex flex-wrap justify-center gap-8 mt-12 p-6">
+  <% RegisterHome.forEach(house => { %>
+    <div class="w-full sm:w-72 bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
+      
+      <!-- Card Image -->
+      <img
+        class="w-full h-52 object-cover"
+        src="<%= house.image %>"
+        alt="<%= house.name %>"
+      >
 
-        <div class="p-5">
-          <!-- Name -->
-          <h2 class="text-xl font-bold text-gray-800 mb-1">
-            <%= house.name %>
-          </h2>
+      <div class="p-5">
+        <!-- Name -->
+        <h2 class="text-xl font-bold text-gray-800 mb-1 truncate">
+          <%= house.name %>
+        </h2>
 
-          <!-- Address -->
-          <p class="text-sm text-gray-500 mb-3">
-            <%= house.address %>
-          </p>
+        <!-- Address -->
+        <p class="text-sm text-gray-500 mb-3 truncate">
+          <%= house.address %>
+        </p>
 
-          <!-- Rating -->
-          <div class="flex items-center mb-3">
-            <div class="flex text-yellow-400 mr-2">
-              <% for(let i = 0; i < 4; i++) { %>
-                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                  <path d="M10 15l-5.878 3.09L5.24 12.545 1 8.91l6.06-.882L10 2.5l2.94 5.528 6.06.882-4.24 3.635 1.118 5.545z"/>
-                </svg>
-              <% } %>
-            </div>
-            <span class="text-sm text-gray-600">
-              <%= house.rating %>
-            </span>
+        <!-- Rating -->
+        <div class="flex items-center mb-3">
+          <div class="flex text-yellow-400 mr-2">
+            <% for(let i = 0; i < 4; i++) { %>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                <path d="M10 15l-5.878 3.09L5.24 12.545 1 8.91l6.06-.882L10 2.5l2.94 5.528 6.06.882-4.24 3.635 1.118 5.545z"/>
+              </svg>
+            <% } %>
           </div>
-
-          <!-- Cost -->
-          <p class="text-lg font-bold text-purple-700 mb-4">
-            $<%= house.cost %>
-          </p>
-
-          <!-- Booking Button -->
-          <button class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
-            Book
-          </button>
+          <span class="text-sm text-gray-600 font-medium">
+            <%= house.rating %> / 5
+          </span>
         </div>
+
+        <!-- Cost -->
+        <p class="text-lg font-bold text-purple-700 mb-4">
+          $<%= house.cost %> <span class="text-sm text-gray-500 font-medium">/ night</span>
+        </p>
+
+        <!-- Booking Button -->
+        <button class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-2 rounded-xl font-semibold shadow hover:from-green-600 hover:to-green-700 transition">
+          Book Now
+        </button>
       </div>
-    <% }) %>
-  </section>
+    </div>
+  <% }) %>
+</section>

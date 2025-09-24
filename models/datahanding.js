@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const HomeSchema = mongoose.Schema({
     image:{
         type: String,
-        required: true
     },
     name:{
         type: String,
@@ -34,7 +33,7 @@ module. exports = mongoose.model("Home", HomeSchema);
   
         
     // save()
-    // static fetchAll()
-    // static FindById(HomeID)
+    // static find()
+    // static findById(HomeID)
     // static DeleteById(HomeID)
         

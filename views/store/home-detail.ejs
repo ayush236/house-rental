@@ -4,64 +4,74 @@
   <%- include('../partial/nav') %>
 
   <!-- Hero Section -->
-  <main class="max-w-4xl mx-auto mt-20 p-10 bg-white rounded-3xl shadow-xl text-center">
-    <h1 class="text-4xl font-extrabold text-purple-800 mb-4">
-      Welcome to Airbnb Home-detail Page
+  <main class="max-w-4xl mx-auto mt-24 p-10 bg-white rounded-3xl shadow-2xl text-center">
+    <h1 class="text-5xl font-extrabold text-purple-800 mb-4 tracking-wide">
+      Welcome to  Home Detail
     </h1>
     <p class="text-lg text-gray-600 mb-6">
-      This is the website where you can see the details.
+      Here you can see all the details about this house.
     </p>
   </main>
 
-  <!-- card section-->
-   <section class="max-w-6xl mx-auto flex flex-wrap justify-center gap-8 mt-12 p-6">
- 
-      <div class="w-full sm:w-72 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
-        <!-- Card Image -->
-        <img
-          class="w-full h-48 object-cover"
-          src="<%= house.image %>"
-          alt="<%= house.name %>"
-        >
+  <!-- Card Section -->
+  <section class="max-w-4xl mx-auto flex flex-col sm:flex-row gap-8 mt-12 p-6">
+    
+    <!-- Image -->
+    <div class="sm:w-1/2 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition transform hover:scale-[1.02]">
+      <img
+        class="w-full h-80 sm:h-full object-cover"
+        src="<%= house.image %>"
+        alt="<%= house.name %>"
+      >
+    </div>
 
-        <div class="p-5">
-          <!-- Name -->
-          <h2 class="text-xl font-bold text-gray-800 mb-1">
-            <%= house.name %>
-          </h2>
+    <!-- Details -->
+    <div class="sm:w-1/2 bg-white rounded-3xl shadow-lg p-6 flex flex-col justify-between">
+      
+      <!-- Name -->
+      <h2 class="text-3xl font-extrabold text-gray-800 mb-3">
+        <%= house.name %>
+      </h2>
 
-          <!-- Address -->
-          <p class="text-sm text-gray-500 mb-3">
-            <%= house.address %>
-          </p>
+      <!-- Address -->
+      <p class="text-gray-500 text-sm mb-4 italic">
+        📍 <%= house.address %>
+      </p>
 
-          <!-- Rating -->
-          <div class="flex items-center mb-3">
-            <div class="flex text-yellow-400 mr-2">
-              <% for(let i = 0; i < 4; i++) { %>
-                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                  <path d="M10 15l-5.878 3.09L5.24 12.545 1 8.91l6.06-.882L10 2.5l2.94 5.528 6.06.882-4.24 3.635 1.118 5.545z"/>
-                </svg>
-              <% } %>
-            </div>
-            <span class="text-sm text-gray-600">
-              <%= house.rating %>
-            </span>
-          </div>
-
-          <!-- Cost -->
-          <p class="text-lg font-bold text-purple-700 mb-4">
-            $<%= house.cost %>
-          </p>
-
-          <!-- Booking Button -->
-          <%- include('../partial/favourite', {house: house}) %>
-          
+      <!-- Rating -->
+      <div class="flex items-center mb-4">
+        <div class="flex text-yellow-400 mr-3">
+          <% for(let i = 0; i < 4; i++) { %>
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
+              <path d="M10 15l-5.878 3.09L5.24 12.545 1 8.91l6.06-.882L10 2.5l2.94 5.528 6.06.882-4.24 3.635 1.118 5.545z"/>
+            </svg>
+          <% } %>
         </div>
+        <span class="text-gray-700 font-medium text-sm">
+          <%= house.rating %> / 5
+        </span>
       </div>
 
-  </section>
+      <!-- Cost -->
+      <p class="text-2xl font-bold text-purple-700 mb-6">
+        $<%= house.cost %> <span class="text-gray-500 text-base font-medium">/ night</span>
+      </p>
 
-  
+
+      <!-- Description Section -->
+      <div class="bg-gray-50 p-5 rounded-2xl shadow-inner border border-gray-100">
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Description</h3>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          <%= house.description %>
+        </p>
+      </div>
+
+      <!-- Favourite / Booking Button -->
+      <div class="mb-6">
+        <%- include('../partial/favourite', {house: house}) %>
+      </div>
+
+    </div>
+  </section>
 </body>
 </html>

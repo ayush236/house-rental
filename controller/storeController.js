@@ -1,6 +1,6 @@
 // const rootDir = require("../utils/path")
 const Home = require("../models/datahanding");
-const favourite = require("../models/favourite");
+const Favourite = require("../models/favourite");
 
 
 
@@ -9,7 +9,7 @@ const favourite = require("../models/favourite");
 // showing the data at home 
 
 exports.Index=(req, res, next)=>{
-    Home.fetchAll().then(Rendering =>{
+    Home.find().then(Rendering =>{
         res.render('store/index.ejs', 
         { RegisterHome: Rendering,
         title: "INDEX"
@@ -22,7 +22,7 @@ exports.Index=(req, res, next)=>{
 // showing the data at home 
 
 exports.getHome=(req, res, next)=>{
-Home.fetchAll().then(Rendering =>{        
+Home.find().then(Rendering =>{        
     res.render('store/home-list.ejs', 
         { RegisterHome: Rendering,
         title: "HomePage"
@@ -38,7 +38,7 @@ Home.fetchAll().then(Rendering =>{
 exports.getbooking =(req, res, next)=>{
 
     console.log('this is the booking site of the customer');
-    Home.fetchAll().then(Rendering =>{
+    Home.find().then(Rendering =>{
         res.render('store/booking.ejs', 
         { title: "BOOKING"
     })});
@@ -50,9 +50,9 @@ exports.getbooking =(req, res, next)=>{
 exports.favourite =(req, res, next)=>{
 
     console.log('this is favourite-list')
-    favourite.getFavourite().then(favourites=>{
-        favourites = favourites.map(favi =>favi.HomeId)
-    Home.fetchAll().then(Rendering =>{
+    Favourite.find().then(favourites=>{
+        favourites = favourites.map(favi =>favi.HomeId.toString())
+    Home.find().then(Rendering =>{
         const favouritehouse = Rendering.filter(house =>
             favourites.includes(house._id.toString())
         )
@@ -69,7 +69,7 @@ exports.favourite =(req, res, next)=>{
 exports. getHomeDetail = (req, res, next)=>{
     const houseid = req.params.HomeID;
     console.log("this is the value of id",houseid);
-    Home.FindById(houseid).then(houses=>{
+    Home.findById(houseid).then(houses=>{
         if(!houses){
             console.log("house is not found")
             res.redirect('/Home')
@@ -88,22 +88,29 @@ exports. getHomeDetail = (req, res, next)=>{
 
 exports. getaddfavourite = (req, res, next)=>{
     const HomeId = req.body.id;
-    const favi = new favourite(HomeId);
-    favi.save().then(result=>{
-        console.log('Fav add', result);
-    }).catch(err=>{
-        console.log("erro is :", err);
-    }).finally(()=>{
-        res.redirect('/favourite');
-    });
-}
+    Favourite.findOne({HomeId : HomeId})
+    .then(existingfavourite=>{
+        if(existingfavourite){
+            console.log("favourite is already marked");
+        }else{
+            const favi = new Favourite({HomeId : HomeId});
+            favi.save().then(result =>{
+                console.log("Fav is added", result)
+            });
+        }
+            res.redirect('/favourite')
+
+    }).catch(error=>{
+        console.log('error while:', error);
+    });  
+};
 
 
 // remove-favourite 
 
 exports. postDeletefavourite =(req, res, next)=>{
     const homeIds = req.params.homeId;
-    favourite.DeleteById(homeIds).then(result=>{
+    Favourite.DeleteById(homeIds).then(result=>{  
         console.log("result is :", result)
     }).catch(error=>{
         if(error){
