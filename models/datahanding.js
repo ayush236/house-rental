@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
+const favourite = require('./favourite');
 
 
 const HomeSchema = mongoose.Schema({
@@ -23,6 +24,14 @@ const HomeSchema = mongoose.Schema({
         required: true
     },
     description: String
+});
+
+HomeSchema.pre('findOneAndDelete', async function(next) {
+
+    console.log('came to pre hook while deleting the home section');
+    const homeId = this.getQuery()._id;
+    await favourite.deleteMany({homeId : homeId});
+    next();
 });
 
 module. exports = mongoose.model("Home", HomeSchema);

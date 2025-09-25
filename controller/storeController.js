@@ -110,7 +110,7 @@ exports. getaddfavourite = (req, res, next)=>{
 
 exports. postDeletefavourite =(req, res, next)=>{
     const homeIds = req.params.homeId;
-    Favourite.DeleteById(homeIds).then(result=>{  
+    Favourite.findOneAndDelete({HomeId:homeIds}).then(result=>{  
         console.log("result is :", result)
     }).catch(error=>{
         if(error){
