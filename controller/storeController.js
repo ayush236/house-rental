@@ -50,19 +50,17 @@ exports.getbooking =(req, res, next)=>{
 exports.favourite =(req, res, next)=>{
 
     console.log('this is favourite-list')
-    Favourite.find().then(favourites=>{
-        favourites = favourites.map(favi =>favi.HomeId.toString())
-    Home.find().then(Rendering =>{
-        const favouritehouse = Rendering.filter(house =>
-            favourites.includes(house._id.toString())
-        )
+    Favourite.find()
+    .populate("HomeId").
+    then((favourites)=>{
+        const favouritehome = favourites.map((favi) =>favi.HomeId)
+              .filter(house => house !== null);   
         res.render('store/favourite-list.ejs',{
-        favouritehouse: favouritehouse,
+        favouritehouse: favouritehome,
         title: "FAVOURITE-LIST",
         
     })});
-      });
-}
+      };
 
 //home-detail
 

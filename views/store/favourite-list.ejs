@@ -1,23 +1,23 @@
 <%- include('../partial/boiler') %>
-<body class="min-h-screen bg-gradient-to-r from-blue-100 to-purple-200 flex flex-col">
+<body class="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 flex flex-col">
   <!-- Navbar -->
   <%- include('../partial/nav') %>
 
   <!-- Hero Section -->
-  <main class="max-w-4xl mx-auto mt-20 p-10 bg-white rounded-3xl shadow-xl text-center">
-    <h1 class="text-4xl font-extrabold text-purple-800 mb-4">
-     FAVOURITE LIST
+  <main class="max-w-4xl mx-auto mt-24 px-8 py-12 bg-white rounded-3xl shadow-xl text-center border border-gray-100">
+    <h1 class="text-4xl font-extrabold text-purple-800 mb-4 tracking-tight">
+      FAVOURITE LIST
     </h1>
-    <p class="text-lg text-gray-600 mb-6">
-      This is the site were you can see your favourite.
+    <p class="text-lg text-gray-600">
+      This is the site where you can see your favourite.
     </p>
   </main>
 
   <!-- Cards Section -->
-<section class="max-w-6xl mx-auto flex flex-wrap justify-center gap-8 mt-12 p-6">
+  <section class="max-w-6xl mx-auto flex flex-wrap justify-center gap-10 mt-14 px-6 pb-16">
     <% favouritehouse.forEach(house => { %>
-  
-      <div class="w-full sm:w-72 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+      <div class="w-full sm:w-72 bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl hover:-translate-y-1 transform transition duration-300 border border-gray-100">
+        
         <!-- Card Image -->
         <img
           class="w-full h-48 object-cover"
@@ -25,19 +25,19 @@
           alt="<%= house.name %>"
         >
 
-        <div class="p-5">
+        <div class="p-6">
           <!-- Name -->
-          <h2 class="text-xl font-bold text-gray-800 mb-1">
+          <h2 class="text-xl font-bold text-gray-900 mb-1">
             <%= house.name %>
           </h2>
 
           <!-- Address -->
-          <p class="text-sm text-gray-500 mb-3">
+          <p class="text-sm text-gray-500 mb-4">
             <%= house.address %>
           </p>
 
           <!-- Rating -->
-          <div class="flex items-center mb-3">
+          <div class="flex items-center mb-4">
             <div class="flex text-yellow-400 mr-2">
               <% for(let i = 0; i < 4; i++) { %>
                 <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
@@ -51,21 +51,21 @@
           </div>
 
           <!-- Cost -->
-          <p class="text-lg font-bold text-purple-700 mb-4">
+          <p class="text-lg font-bold text-purple-700 mb-6">
             $<%= house.cost %>
           </p>
 
-          <!-- remove favourite house-->
-           <form action="/favourite/delete/<%= house._id%>" method="POST">
-          <button type="submit" class=" w-24 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition">
-            Remove 
-          </button>
+          <!-- Remove favourite house -->
+          <form action="/favourite/delete/<%= house._id %>" method="POST">
+            <button 
+              type="submit" 
+              class="w-full bg-red-500 text-white py-2.5 rounded-lg font-medium hover:bg-red-600 shadow-sm transition">
+              Remove
+            </button>
           </form>
-
         </div>
       </div>
     <% }) %>
-
   </section>
 </body>
 </html>
