@@ -1,19 +1,21 @@
 <%- include('../partial/boiler') %>
-<body class="min-h-screen bg-gradient-to-r from-blue-100 to-purple-200 flex flex-col">
+<body class="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-indigo-50 flex flex-col">
   <!-- Navbar -->
   <%- include('../partial/nav') %>
 
   <!-- Hero Section -->
-  <main class="max-w-4xl mx-auto mt-20 p-10 bg-white rounded-3xl shadow-xl text-center">
-    <h1 class="text-4xl font-extrabold text-purple-800 mb-4">
-      Welcome to INDEX Page
+  <main class="max-w-4xl mx-auto mt-20 px-8 py-12 bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl text-center border border-gray-100">
+    <h1 class="text-4xl font-extrabold text-purple-800 mb-4 tracking-tight animate-pulse">
+      Welcome to Our Home Listings
     </h1>
     <p class="text-lg text-gray-600 mb-6">
-      This is the website where houses and rooms can be rented for tourists and travelers.
+      Browse homes and rooms available for tourists and travelers. Click for details or add to favourites!
     </p>
   </main>
 
   <!-- Cards Section -->
-  <%-include('../partial/card') %>
+  <section class="max-w-6xl mx-auto flex flex-wrap justify-center gap-8 mt-12 p-6">
+    <%- include('../partial/card') %>
+  </section>
 </body>
 </html>

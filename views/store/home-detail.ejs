@@ -1,15 +1,15 @@
 <%- include('../partial/boiler') %>
-<body class="min-h-screen bg-gradient-to-r from-blue-100 to-purple-200 flex flex-col">
+<body class="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-indigo-50 flex flex-col">
   <!-- Navbar -->
   <%- include('../partial/nav') %>
 
   <!-- Hero Section -->
-  <main class="max-w-4xl mx-auto mt-24 p-10 bg-white rounded-3xl shadow-2xl text-center">
-    <h1 class="text-5xl font-extrabold text-purple-800 mb-4 tracking-wide">
-      Welcome to  Home Detail
+  <main class="max-w-4xl mx-auto mt-24 px-8 py-12 bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl text-center border border-gray-100">
+    <h1 class="text-5xl font-extrabold text-purple-800 mb-4 tracking-wide animate-pulse">
+      House Details
     </h1>
     <p class="text-lg text-gray-600 mb-6">
-      Here you can see all the details about this house.
+      Explore all the information about this property, including amenities, cost, and more.
     </p>
   </main>
 
@@ -17,19 +17,19 @@
   <section class="max-w-4xl mx-auto flex flex-col sm:flex-row gap-8 mt-12 p-6">
     
     <!-- Image -->
-    <div class="sm:w-1/2 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition transform hover:scale-[1.02]">
+    <div class="sm:w-1/2 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition transform hover:scale-[1.03]">
       <img
         class="w-full h-80 sm:h-full object-cover"
-        src="<%= house.image %>"
+        src="<%= house.image || '/image/image.webp' %>"
         alt="<%= house.name %>"
       >
     </div>
 
     <!-- Details -->
-    <div class="sm:w-1/2 bg-white rounded-3xl shadow-lg p-6 flex flex-col justify-between">
+    <div class="sm:w-1/2 bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-6 flex flex-col justify-between">
       
       <!-- Name -->
-      <h2 class="text-3xl font-extrabold text-gray-800 mb-3">
+      <h2 class="text-3xl font-extrabold text-gray-800 mb-3 truncate">
         <%= house.name %>
       </h2>
 
@@ -41,7 +41,7 @@
       <!-- Rating -->
       <div class="flex items-center mb-4">
         <div class="flex text-yellow-400 mr-3">
-          <% for(let i = 0; i < 4; i++) { %>
+          <% for(let i = 0; i < house.rating; i++) { %>
             <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
               <path d="M10 15l-5.878 3.09L5.24 12.545 1 8.91l6.06-.882L10 2.5l2.94 5.528 6.06.882-4.24 3.635 1.118 5.545z"/>
             </svg>
@@ -57,9 +57,8 @@
         $<%= house.cost %> <span class="text-gray-500 text-base font-medium">/ night</span>
       </p>
 
-
       <!-- Description Section -->
-      <div class="bg-gray-50 p-5 rounded-2xl shadow-inner border border-gray-100">
+      <div class="bg-white/70 backdrop-blur-sm p-5 rounded-2xl shadow-inner border border-gray-200 mb-6">
         <h3 class="text-xl font-semibold text-gray-800 mb-2">Description</h3>
         <p class="text-gray-600 text-sm leading-relaxed">
           <%= house.description %>
