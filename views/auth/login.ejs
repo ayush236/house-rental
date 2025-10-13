@@ -1,103 +1,79 @@
 <%- include('../partial/boiler') %>
-<body class="min-h-screen flex items-center justify-center overflow-hidden relative font-sans">
+<body class="min-h-screen bg-gradient-to-r from-blue-100 to-purple-200 flex items-center justify-center p-4">
 
-  <!-- 🔮 Animated Gradient Background -->
-  <div class="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-gradient bg-[length:400%_400%]"></div>
-  <div class="absolute inset-0 backdrop-blur-3xl bg-white/10"></div>
+  <!-- Big Card Container -->
+  <div class="max-w-5xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
 
-  <!-- 🌟 Login Card -->
-  <main class="relative z-10 w-full max-w-md mx-auto bg-white/30 backdrop-blur-2xl rounded-3xl shadow-2xl p-10 border border-white/20 transform transition duration-300 hover:scale-[1.02]">
-    <h1 class="text-4xl font-extrabold text-center text-gray-900 mb-2">Welcome Back 👋</h1>
-    <p class="text-center text-gray-600 mb-8">Log in to manage listings, favorites, and explore new homes.</p>
+    <!-- Left: Login Form -->
+    <div class="md:w-1/2 p-10 flex flex-col justify-center bg-white">
+      <h1 class="text-3xl font-extrabold text-gray-900 mb-4 text-center">Welcome Back 👋</h1>
+      <p class="text-gray-600 text-center mb-8">Log in to manage your listings, favorites, and explore new homes.</p>
+      
+      <form action="/login" method="POST" class="space-y-6">
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required
+            class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" />
+        </div>
 
-    <!-- Login Form -->
-    <form action="/login" method="POST" class="space-y-6">
+        <!-- Password -->
+        <div>
+          <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required
+            class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" />
+        </div>
 
-      <!-- Email -->
-      <div>
-        <label for="email" class="block text-sm font-semibold text-gray-800 mb-2">📧 Email</label>
-        <input 
-          type="email" 
-          id="email" 
-          name="email" 
-          placeholder="Enter your email"
-          required
-          class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
-        />
+        <!-- Remember & Forgot -->
+        <div class="flex items-center justify-between text-sm">
+          <label class="flex items-center gap-2 text-gray-600">
+            <input type="checkbox" name="remember" class="w-4 h-4 text-indigo-600 border-gray-300 rounded" />
+            Remember me
+          </label>
+          <a href="/forgot-password" class="text-indigo-600 hover:underline">Forgot password?</a>
+        </div>
+
+        <!-- Login Button -->
+        <button type="submit"
+          class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-3 rounded-xl shadow-lg transition transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-indigo-300">
+          Log In
+        </button>
+
+        <!-- Signup -->
+        <p class="text-center text-sm text-gray-600 mt-4">
+          Don’t have an account? 
+          <a href="/signup" class="text-indigo-600 font-semibold hover:underline">Sign up</a>
+        </p>
+      </form>
+    </div>
+
+    <!-- Right: Animated Theme -->
+    <div class="md:w-1/2 relative bg-indigo-50 flex items-center justify-center overflow-hidden p-6">
+      <!-- Animated gradient blobs -->
+      <div class="absolute w-72 h-72 bg-purple-400 rounded-full opacity-70 animate-blob top-0 left-10"></div>
+      <div class="absolute w-56 h-56 bg-indigo-300 rounded-full opacity-60 animate-blob animation-delay-2000 bottom-10 right-10"></div>
+      <div class="absolute w-64 h-64 bg-pink-300 rounded-full opacity-50 animate-blob animation-delay-4000 top-1/4 right-20"></div>
+
+      <!-- Optional: Text or SVG -->
+      <div class="relative z-10 text-center">
+        <h2 class="text-2xl font-bold text-purple-700 mb-2">Discover Your Perfect Home For Party</h2>
+        <p class="text-gray-600 max-w-xs mx-auto">Experience the best listings, find favorites, and explore unique stays around the world.</p>
       </div>
+    </div>
 
-      <!-- Password -->
-      <div>
-        <label for="password" class="block text-sm font-semibold text-gray-800 mb-2">🔒 Password</label>
-        <input 
-          type="password" 
-          id="password" 
-          name="password" 
-          placeholder="Enter your password"
-          required
-          class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
-        />
-      </div>
+  </div>
 
-      <!-- Remember & Forgot -->
-      <div class="flex items-center justify-between text-sm">
-        <label class="flex items-center gap-2 text-gray-700">
-          <input type="checkbox" name="remember" class="w-4 h-4 text-indigo-600 border-gray-300 rounded" />
-          Remember me
-        </label>
-        <a href="/forgot-password" class="text-indigo-600 hover:underline">Forgot password?</a>
-      </div>
-
-      <!-- Login Button -->
-      <button 
-        type="submit"
-        class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-3 rounded-xl shadow-lg transition transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-indigo-300"
-      >
-        🔑 Log In
-      </button>
-
-      <!-- Signup Link -->
-      <p class="text-center text-sm text-gray-700 mt-4">
-        Don’t have an account? 
-        <a href="/signup" class="text-indigo-700 font-semibold hover:underline">Sign up</a>
-      </p>
-    </form>
-  </main>
-
-  <!-- 🌈 Floating Animated Circles -->
-  <div class="absolute top-10 left-10 w-32 h-32 bg-pink-400 opacity-30 rounded-full mix-blend-multiply animate-float-slow"></div>
-  <div class="absolute bottom-16 right-16 w-40 h-40 bg-indigo-400 opacity-30 rounded-full mix-blend-multiply animate-float"></div>
-  <div class="absolute top-32 right-32 w-24 h-24 bg-purple-400 opacity-30 rounded-full mix-blend-multiply animate-float-delayed"></div>
+  <!-- Animations -->
+  <style>
+    @keyframes blob {
+      0%, 100% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(30px, -20px) scale(1.1); }
+      66% { transform: translate(-20px, 30px) scale(0.9); }
+    }
+    .animate-blob { animation: blob 8s infinite ease-in-out; }
+    .animation-delay-2000 { animation-delay: 2s; }
+    .animation-delay-4000 { animation-delay: 4s; }
+  </style>
 
 </body>
 </html>
-
-<!-- 💫 Custom Animations -->
-<style>
-  @keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  .animate-gradient {
-    animation: gradient 12s ease infinite;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-  }
-
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  .animate-float-slow {
-    animation: float 10s ease-in-out infinite;
-  }
-
-  .animate-float-delayed {
-    animation: float 8s ease-in-out infinite 2s;
-  }
-</style>
