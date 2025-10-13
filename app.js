@@ -6,14 +6,18 @@ const StoreRouter = require("./router/StoreRouter");
 const { HostRouter } = require("./router/HostRouter");
 const { error } = require("./controller/error");
 const {default: Mongoose} = require('mongoose');
+const authRouter = require("./router/authRouter");
 const app = express();
 
 app.set("view enginee", "ejs");
 app.set("views", "views");
+
 app.use(express.static(("public")));
 app.use(express.urlencoded());
 app.use(StoreRouter);
 app.use(HostRouter);
+app.use(authRouter);
+
 app.use(error);
 
 const PORT = 3000;
