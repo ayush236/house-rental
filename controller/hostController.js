@@ -11,6 +11,7 @@ exports.addHome=(req, res, next)=>{
 
     res.render('host/edit-home.ejs', {
         title: "addHome",
+         isLoggedIn: req.isLoggedIn,
         editing: false
     });
 }
@@ -30,6 +31,7 @@ exports.getEditHome=(req, res, next)=>{
         res.render('host/edit-home.ejs', {
         title: "editing-page",
         editing: editing,
+         isLoggedIn: req.isLoggedIn,
         house: houses
         
     });
@@ -46,6 +48,7 @@ exports.getHostHome=(req, res, next)=>{
     Home.find().then(Rendering =>{
         res.render('host/host-home-list.ejs', 
         { RegisterHome: Rendering,
+             isLoggedIn: req.isLoggedIn,
         title: "host-home"
     })});
     console.log('this the home page');
@@ -63,7 +66,8 @@ exports.submitHome=(req, res, next)=>{
         console.log('submit the homes SUCCESS');
     });
     res.render('store/submit.ejs', {
-        title: "submitHome" 
+        title: "submitHome",
+         isLoggedIn: req.isLoggedIn 
     });
 };
 
