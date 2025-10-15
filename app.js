@@ -15,7 +15,16 @@ app.set("views", "views");
 app.use(express.static(("public")));
 app.use(express.urlencoded());
 app.use(StoreRouter);
-app.use(HostRouter);
+
+app.use("/host",(req, res, next)=>{
+  if(!req.isLoggedIn){
+    return res.redirect('/login')
+  }else{
+  next();
+  }
+});
+
+app.use("/host",HostRouter);
 app.use(authRouter);
 
 app.use(error);
