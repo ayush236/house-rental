@@ -7,6 +7,7 @@ const { HostRouter } = require("./router/HostRouter");
 const { error } = require("./controller/error");
 const {default: Mongoose} = require('mongoose');
 const authRouter = require("./router/authRouter");
+const session = require('express-session');
 const app = express();
 
 app.set("view enginee", "ejs");
@@ -23,7 +24,7 @@ app.use(express.urlencoded());
 app.use
 app.use(StoreRouter);
 
-app.use( (req, res, next)=>{
+app.use("/host", (req, res, next)=>{
   if(!req.isLoggedIn){
     return res.redirect('/login')
   }else{
@@ -31,7 +32,7 @@ app.use( (req, res, next)=>{
   }
 });
 
-app.use("/host",HostRouter);
+app.use(HostRouter);
 app.use(authRouter);
 
 app.use(error);

@@ -13,3 +13,7 @@ exports.postlogin=(req, res, next)=>{
     res.redirect('/');
 
 }
+exports.postlogout=(req, res, next)=>{
+    res.cookie("isLoggedIn", false)
+    res.redirect('/login');
+}
