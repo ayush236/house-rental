@@ -17,6 +17,7 @@ exports.Index=(req, res, next)=>{
         }
     )});
     console.log('this the home page');
+    console.log("session is", req.session)
 }
 
 
