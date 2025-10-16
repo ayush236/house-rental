@@ -8,7 +8,7 @@ exports.getlogin=(req, res, next)=>{
 
 exports.postlogin=(req, res, next)=>{
     console.log(req.body);
-    res.cookie("isLoggedIn", true)
+    req.session.isLoggedIn = true;
     // req.isLoggedIn = true;    
     res.redirect('/');
 

@@ -15,12 +15,20 @@ app.set("views", "views");
 
 app.use(express.static(("public")));
 
+app.use(express.urlencoded());
+
+app.use(session({
+  secret: 'hello learning the session ',
+  resave: false,
+  saveUninitialized: true
+}))
+
+
 app.use( (req, res, next)=>{
-  req.isLoggedIn = req.get('cookie')? req.get('cookie').split('=')[1] === 'true' : false;
+  req.isLoggedIn = req.session.isLoggedIn;
   next();
 })
 
-app.use(express.urlencoded());
 app.use
 app.use(StoreRouter);
 
