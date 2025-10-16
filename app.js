@@ -13,10 +13,17 @@ app.set("view enginee", "ejs");
 app.set("views", "views");
 
 app.use(express.static(("public")));
+
+app.use( (req, res, next)=>{
+  req.isLoggedIn = req.get('cookie')? req.get('cookie').split('=')[1] === 'true' : false;
+  next();
+})
+
 app.use(express.urlencoded());
+app.use
 app.use(StoreRouter);
 
-app.use("/host",(req, res, next)=>{
+app.use( (req, res, next)=>{
   if(!req.isLoggedIn){
     return res.redirect('/login')
   }else{

@@ -11,8 +11,9 @@ exports.addHome=(req, res, next)=>{
 
     res.render('host/edit-home.ejs', {
         title: "addHome",
+        editing: false,
          isLoggedIn: req.isLoggedIn,
-        editing: false
+
     });
 }
 
@@ -31,8 +32,9 @@ exports.getEditHome=(req, res, next)=>{
         res.render('host/edit-home.ejs', {
         title: "editing-page",
         editing: editing,
+        house: houses,
          isLoggedIn: req.isLoggedIn,
-        house: houses
+
         
     });
     })
@@ -48,8 +50,9 @@ exports.getHostHome=(req, res, next)=>{
     Home.find().then(Rendering =>{
         res.render('host/host-home-list.ejs', 
         { RegisterHome: Rendering,
+        title: "host-home",
              isLoggedIn: req.isLoggedIn,
-        title: "host-home"
+
     })});
     console.log('this the home page');
 }
