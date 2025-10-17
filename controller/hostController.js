@@ -12,7 +12,7 @@ exports.addHome=(req, res, next)=>{
     res.render('host/edit-home.ejs', {
         title: "addHome",
         editing: false,
-         isLoggedIn: req.isLoggedIn,
+         isLoggedIn: req.session.isLoggedIn,
 
     });
 }
@@ -33,7 +33,7 @@ exports.getEditHome=(req, res, next)=>{
         title: "editing-page",
         editing: editing,
         house: houses,
-         isLoggedIn: req.isLoggedIn,
+         isLoggedIn: req.session.isLoggedIn,
 
         
     });
@@ -51,7 +51,7 @@ exports.getHostHome=(req, res, next)=>{
         res.render('host/host-home-list.ejs', 
         { RegisterHome: Rendering,
         title: "host-home",
-             isLoggedIn: req.isLoggedIn,
+             isLoggedIn: req.session.isLoggedIn,
 
     })});
     console.log('this the home page');
@@ -70,7 +70,7 @@ exports.submitHome=(req, res, next)=>{
     });
     res.render('store/submit.ejs', {
         title: "submitHome",
-         isLoggedIn: req.isLoggedIn 
+         isLoggedIn: req.session.isLoggedIn 
     });
 };
 

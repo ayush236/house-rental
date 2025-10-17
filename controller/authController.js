@@ -9,7 +9,7 @@ exports.getlogin=(req, res, next)=>{
 exports.postlogin=(req, res, next)=>{
     console.log(req.body);
     req.session.isLoggedIn = true;
-    // req.isLoggedIn = true;    
+    // req.session.isLoggedIn = true;    
     res.redirect('/');
 
 }
