@@ -11,27 +11,48 @@
     <div class="md:w-1/2 p-10 flex flex-col justify-center bg-white">
       <h1 class="text-3xl font-extrabold text-gray-900 mb-4 text-center">welcome,find a wonderful Experience!</h1>
       <p class="text-gray-600 text-center mb-8">sign up to manage and find the house</p>
+
+      
       
       <form action="/signup" method="POST" class="space-y-6">
+
+        <% if(typeof errors != 'undefined' && errors && errors.length >0) { %>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6 " role="alert">
+          <ul class="list-disc list-inside space-y-1">
+            <% errors.forEach(error =>{ %>
+              <li> <%= error %></li>
+
+            <%});%>
+
+          </ul>
+          
+        </div>
+        <%}%>
 
         <!-- Firstname -->
         <div>
           <label for="First Name" class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
-          <input type="text" id="email" name="Firstname" placeholder="Enter your Firstname" required
+          <input type="text" id="Firstname" name="Firstname" placeholder="Enter your Firstname"
+          value="<%= typeof oldInput !=='undefined'? oldInput.Firstname : ''  %>"
+          required
             class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" />
         </div>
 
         <!-- Lastname -->
         <div>
-          <label for="Firstname" class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
-          <input type="text" id="email" name="Lastname" placeholder="Enter your Lastname" required
+          <label for="Lastname" class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
+          <input type="text" id="Lastname" name="Lastname" placeholder="Enter your Lastname" 
+          value="<%= typeof oldInput !== 'undefined'? oldInput.Lastname : '' %>"
+          required
             class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" />
         </div>
 
         <!-- Email -->
         <div>
-          <label for="Firstname" class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-          <input type="text" id="email" name="Email" placeholder="Enter your email" required
+          <label for="Email" class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+          <input type="text" id="email" name="Email" placeholder="Enter your email" 
+          value="<%= typeof oldInput !== 'undefined' ? oldInput.Email : '' %>"
+          required
             class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" />
         </div>
 
@@ -39,28 +60,37 @@
         <!-- Password -->
         <div>
           <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
-          <input type="password" id="password" name="password" placeholder="Enter your password" required
+          <input type="password" id="password" name="password" placeholder="Enter your password" 
+        
+          required
             class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" />
         </div>
 
          <!-- conform password -->
         <div>
           <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Conform Password</label>
-          <input type="password" id="password" name="Conform_password" placeholder="Conform your password" required
+          <input type="password" id="password" name="Conform_password" placeholder="Conform your password" 
+          
+          required
             class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" />
         </div>
 
 
         <!-- select the user_type -->
         <div class="flex gap-3">
-          <label for="user_type" class="font-bold">User Type:</label><br>
+          <label for="userType" class="font-bold">User Type:</label><br>
         <div>
           <label for="user_Type">Guest</label>
-          <input type="radio" id="radio" name="User_Type" value="Guest" required/>
+          <input type="radio" id="radio" name="userType" value="Guest"  
+          checked="<%=typeof oldInput !=='undefined' ? oldInput.userType : '' %>"
+          />
         </div>
         <div>
           <label for="user Type">Host</label>
-          <input type="radio" id="radio" name="UserType" value="Host"  required/>
+          <input type="radio" id="radio" name="userType" value="Host"
+          checked="<%=typeof oldInput !=='undefined' ? oldInput.us : ''%>"
+          
+          />
         </div>
         </div>
 
