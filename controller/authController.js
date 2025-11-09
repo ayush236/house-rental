@@ -1,4 +1,5 @@
 const {check, validationResult} = require('express-validator');
+const User = require('../models/user');
 
 exports.getlogin=(req, res, next)=>{
     res.render("auth/login.ejs",{title :"login page",
@@ -100,7 +101,7 @@ exports.postSignup=[
     
     // final handler middleware
     (req, res, next)=>{
-        const {Firstname, Lastname, Email, userType} =req.body
+        const {Firstname, Lastname, Email, password, userType} =req.body
         const errors = validationResult(req);
         if(!errors.isEmpty()){
             return res.status(422).render("auth/signup",{
@@ -111,9 +112,28 @@ exports.postSignup=[
                     Firstname:Firstname|| '', 
                     Lastname:Lastname||'', 
                     Email:Email||'', 
+                    password:password||'',
                     userType:userType||''
                 }
             })
         }
-    res.redirect('/login')
+
+        const user = new User({Firstname, Lastname, Email, password, userType})
+        user.save().then(()=>{
+          res.redirect('/login')
+        }).catch(err=>{
+            return res.status(422).render("auth/signup",{
+                title: "sign up",
+                isLoggedIn : false,
+                errors: [err.message],
+                oldInput:{
+                    Firstname, 
+                    Lastname, 
+                    Email, 
+                    password,
+                    userType
+                }
+        })
+
+})
 }]
