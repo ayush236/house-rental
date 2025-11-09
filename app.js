@@ -13,7 +13,7 @@ const {default: Mongoose} = require('mongoose');
 const authRouter = require("./router/authRouter");
 const app = express();
 
-app.set("view enginee", "ejs");
+app.set("view engine", "ejs");
 app.set("views", "views");
 
 const store =new mongoDBStore({
@@ -38,7 +38,7 @@ app.use( (req, res, next)=>{
   next();
 })
 
-app.use
+
 app.use(StoreRouter);
 
 app.use("/host", (req, res, next)=>{

@@ -15,7 +15,22 @@ exports.postlogin=(req, res, next)=>{
 }
 exports.postlogout=(req, res, next)=>{
     req.session.destroy(()=>{
+        
     res.redirect('/login');
 
     })
+}
+
+exports.getSignup =(req, res, next)=>{
+        
+    res.render("auth/signup",{
+        title:"signup",
+        isLoggedIn: false
+    })
+}
+
+
+exports.postSignup=(req, res, next)=>{
+    console.log(req.body)
+    res.redirect('/login')
 }
