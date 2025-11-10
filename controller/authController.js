@@ -9,27 +9,24 @@ exports.getlogin=(req, res, next)=>{
 };
 
 exports.postlogin=async(req, res, next)=>{
-    // console.log(req.body);
+    
     const {Email, password} =req.body;
-    // console.log(email)
-    const user = await User.findOne({Email});  // error fix it 
-    console.log("the value of user is",user);
+    
+    const user = await User.findOne({email:Email});  // error fix it 
+    
     if(!user){
         console.log("not found")
-        res.status(422).render('auth/login',{
+        return res.status(422).render('auth/login',{
             title:'login',
             isLoggedIn: false,
             errors:["invalide! user does not exist"],
             oldInput:{Email}
         })
-    }else{
+    }
         console.log(req.body);
     req.session.isLoggedIn = true;
     // req.session.isLoggedIn = true;    
     res.redirect('/');
-    }
-
-    
 
 }
 exports.postlogout=(req, res, next)=>{
