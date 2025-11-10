@@ -1,5 +1,6 @@
 const {check, validationResult} = require('express-validator');
-const User = require('../models/user');
+const User = require('../models/user').default;
+const bcrypt = require('bcryptjs')
 
 exports.getlogin=(req, res, next)=>{
     res.render("auth/login.ejs",{title :"login page",
@@ -118,8 +119,11 @@ exports.postSignup=[
             })
         }
 
-        const user = new User({Firstname, Lastname, Email, password, userType})
-        user.save().then(()=>{
+        //hashing function bcrypt
+        bcrypt.hash(password, 12).then(hashedpassword=>{
+            const user = new User({Firstname, Lastname, Email, password: hashedpassword, userType})
+        return user.save()
+        }).then(()=>{
           res.redirect('/login')
         }).catch(err=>{
             return res.status(422).render("auth/signup",{
@@ -130,7 +134,6 @@ exports.postSignup=[
                     Firstname, 
                     Lastname, 
                     Email, 
-                    password,
                     userType
                 }
         })
