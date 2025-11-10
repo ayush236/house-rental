@@ -1,5 +1,5 @@
 const {check, validationResult} = require('express-validator');
-const User = require('../models/user').default;
+const User = require('../models/user');
 const bcrypt = require('bcryptjs')
 
 exports.getlogin=(req, res, next)=>{
@@ -8,11 +8,28 @@ exports.getlogin=(req, res, next)=>{
     })
 };
 
-exports.postlogin=(req, res, next)=>{
-    console.log(req.body);
+exports.postlogin=async(req, res, next)=>{
+    // console.log(req.body);
+    const {Email, password} =req.body;
+    // console.log(email)
+    const user = await User.findOne({Email});  // error fix it 
+    console.log("the value of user is",user);
+    if(!user){
+        console.log("not found")
+        res.status(422).render('auth/login',{
+            title:'login',
+            isLoggedIn: false,
+            errors:["invalide! user does not exist"],
+            oldInput:{Email}
+        })
+    }else{
+        console.log(req.body);
     req.session.isLoggedIn = true;
     // req.session.isLoggedIn = true;    
     res.redirect('/');
+    }
+
+    
 
 }
 exports.postlogout=(req, res, next)=>{
@@ -64,7 +81,7 @@ exports.postSignup=[
     .withMessage("password must be at least 8 character long")
     .matches(/[a-z]/)
     .withMessage('password must have at least the lowercase letter')
-    .matches(/[A_z]/)
+    .matches(/[A-z]/)
     .withMessage('password must have at least the uppercase letter')
     .matches(/[!@#$%^&*()_+{}|:"?><,../?"]/)
     .withMessage('password must have at least one speacal character')
