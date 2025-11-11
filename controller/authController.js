@@ -4,15 +4,18 @@ const bcrypt = require('bcryptjs')
 
 exports.getlogin=(req, res, next)=>{
     res.render("auth/login.ejs",{title :"login page",
-        isLoggedIn: false
+        isLoggedIn: false,
+        errors:[],
+        oldInput:{email:''},
+        user:{}
     })
 };
 
 exports.postlogin=async(req, res, next)=>{
     
-    const {Email, password} =req.body;
+    const {email, password} =req.body;
     
-    const user = await User.findOne({email:Email});  // error fix it 
+    const user = await User.findOne({Email: email});  // error fix it 
     
     if(!user){
         console.log("not found")
@@ -20,12 +23,30 @@ exports.postlogin=async(req, res, next)=>{
             title:'login',
             isLoggedIn: false,
             errors:["invalide! user does not exist"],
-            oldInput:{Email}
+            oldInput:{email},
+        user:{}
         })
     }
+
+
+    // comparing the password 
+
+    const ismatch = await bcrypt.compare(password, user.password)
+    console.log("the value is", ismatch)
+    if(!ismatch){
+        return res.status(422).render('auth/login',{
+            title:'login',
+            isLoggedIn: false,
+            errors:["password does not match"],
+            oldInput:{email},
+        user:{}
+        })
+    }
+    console.log('the value of user is ', user)
         console.log(req.body);
     req.session.isLoggedIn = true;
-    // req.session.isLoggedIn = true;    
+    req.session.user =user;
+    await req.session.save();
     res.redirect('/');
 
 }
@@ -41,7 +62,8 @@ exports.getSignup =(req, res, next)=>{
         
     res.render("auth/signup",{
         title:"signup",
-        isLoggedIn: false
+        isLoggedIn: false,
+        user:{}
     })
 }
 
@@ -129,7 +151,8 @@ exports.postSignup=[
                     Email:Email||'', 
                     password:password||'',
                     userType:userType||''
-                }
+                },
+        user:{}
             })
         }
 
@@ -149,7 +172,8 @@ exports.postSignup=[
                     Lastname, 
                     Email, 
                     userType
-                }
+                },
+        user:{}
         })
 
 })

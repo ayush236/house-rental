@@ -13,6 +13,7 @@ exports.Index=(req, res, next)=>{
         res.render('store/index.ejs', 
         { RegisterHome: Rendering,
              isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user,
         title: "INDEX"
         }
     )});
@@ -28,6 +29,7 @@ Home.find().then(Rendering =>{
     res.render('store/home-list.ejs', 
         { RegisterHome: Rendering,
              isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user,
         title: "HomePage"
     })});
     console.log('this the home page');
@@ -44,7 +46,8 @@ exports.getbooking =(req, res, next)=>{
     Home.find().then(Rendering =>{
         res.render('store/booking.ejs', 
         { title: "BOOKING",
-             isLoggedIn: req.session.isLoggedIn
+             isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user
     })});
 }
 
@@ -62,6 +65,7 @@ exports.favourite =(req, res, next)=>{
         res.render('store/favourite-list.ejs',{
         favouritehouse: favouritehome,
          isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user,
         title: "FAVOURITE-LIST",
         
     })});
@@ -81,6 +85,7 @@ exports. getHomeDetail = (req, res, next)=>{
             res.render('store/home-detail.ejs',{
             title: "HOMEDETAIL",
              isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user,
             house: houses
     })
         } 
