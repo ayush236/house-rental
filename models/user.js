@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+
 
 const userSchema =  new mongoose.Schema({
     Firstname:{
@@ -21,7 +22,11 @@ const userSchema =  new mongoose.Schema({
         type: String,
         enum:['Guest', 'Host'],
         default:'Guest'
-    }
+    },
+    favourite :[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref :'Home'
+    }]
 });
 
 module.exports = mongoose.model('User', userSchema);

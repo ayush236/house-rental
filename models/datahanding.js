@@ -1,6 +1,5 @@
 const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
-const favourite = require('./favourite');
 
 
 const HomeSchema = mongoose.Schema({
