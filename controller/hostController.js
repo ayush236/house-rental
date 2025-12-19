@@ -66,8 +66,12 @@ exports.getHostHome=(req, res, next)=>{
 
 exports.submitHome=(req, res, next)=>{
     
-    const {image,  name, address, rating, cost, description}= req.body;
+    const {name, address, rating, cost, description}= req.body;
     console.log(req.file);
+    if(!req.file){
+        return res.statue(422).send("No image provided")
+    }
+    const image = req.file.path
     const home = new Home({image,  name, address, rating, cost, description});
     home.save().then(()=>{
         console.log('submit the homes SUCCESS');

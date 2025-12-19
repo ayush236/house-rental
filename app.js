@@ -1,5 +1,6 @@
 //core module
 const express = require("express");
+const  Path = require('path');
 const {default: Mongoose} = require('mongoose');
 
 const DB_path = "mongodb+srv://House_Rental-db:root%40123@ayush.lwg3asu.mongodb.net/renTing?retryWrites=true&w=majority&appName=AYUSH";
@@ -13,6 +14,7 @@ const StoreRouter = require("./router/StoreRouter");
 const { HostRouter } = require("./router/HostRouter");
 const { error } = require("./controller/error");
 const authRouter = require("./router/authRouter");
+const rootDir =require("./utils/path")
 const app = express();
 
 app.set("view engine", "ejs");
@@ -33,23 +35,30 @@ const randomString =(lenght)=>{
 
 }
 
+const Filefilter = (req, file, cb)=>{
+  if(file.mimetype === "image/png"|| file.mimetype === "image/jpg" || file.mimetype === "image/jpeg"){
+    cb(null, true)
+  }else{
+    cd(null, false)
+  }
+}
 
 const storage = multer.diskStorage({
-  destination:(req, file, cd)=>{
-    cd(null, "uploads/")
+  destination:(req, file, cb)=>{
+    cb(null, "uploads/")
   },
-  filename:(req, file, cd)=>{
-    cd(null, randomString(10)+'-'+ file.originalname)
+  filename:(req, file, cb)=>{
+    cb(null, randomString(10)+'-'+ file.originalname)
   }
   
 })
 
 const upload ={
-  storage
+  storage,Filefilter
 }
 
 
-app.use(express.static(("public")));
+app.use(express.static(Path.join(rootDir,"public")));
 app.use(express.urlencoded());
 app.use(multer(upload).single('image'));
 
