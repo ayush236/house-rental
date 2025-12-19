@@ -1,15 +1,17 @@
 //core module
 const express = require("express");
+const {default: Mongoose} = require('mongoose');
+
 const DB_path = "mongodb+srv://House_Rental-db:root%40123@ayush.lwg3asu.mongodb.net/renTing?retryWrites=true&w=majority&appName=AYUSH";
 const session = require('express-session');
 const mongoDBStore = require('connect-mongodb-session')(session);
+const multer = require('multer')
 
 
 //local module
 const StoreRouter = require("./router/StoreRouter");
 const { HostRouter } = require("./router/HostRouter");
 const { error } = require("./controller/error");
-const {default: Mongoose} = require('mongoose');
 const authRouter = require("./router/authRouter");
 const app = express();
 
@@ -21,9 +23,35 @@ const store =new mongoDBStore({
   collection: 'sessions'
 })
 
-app.use(express.static(("public")));
+const randomString =(lenght)=>{
+  const character ='abcdefghijklmnopqrstuvwxyz';
+  let result ='';
+  for(let i =0; i< lenght; i++){
+    result +=character.charAt(Math.floor(Math.random()* character.length))
+  }
+  return result;
 
+}
+
+
+const storage = multer.diskStorage({
+  destination:(req, file, cd)=>{
+    cd(null, "uploads/")
+  },
+  filename:(req, file, cd)=>{
+    cd(null, randomString(10)+'-'+ file.originalname)
+  }
+  
+})
+
+const upload ={
+  storage
+}
+
+
+app.use(express.static(("public")));
 app.use(express.urlencoded());
+app.use(multer(upload).single('image'));
 
 app.use(session({
   secret: 'hello learning the session ',
