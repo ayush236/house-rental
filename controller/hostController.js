@@ -1,5 +1,6 @@
 // const rootDir = require("../utils/path")
 const Home = require("../models/datahanding")
+const FileSystem = require('fs');
 
 
 //add-home which is controlled by host 
@@ -95,6 +96,20 @@ exports.PostEditHome = (req, res, next)=>{
         home.rating=rating;
         home.cost=cost;
         home.description=description;
+
+        if(req.file){
+            FileSystem.unlink(home.image, (err)=>{
+                if(err){
+                    console.log("error while deleting the file:", err);
+                }else{
+                    console.log("old image deleted successfully");
+                }
+        });
+        home.image = req.file.path;
+    }
+
+
+
           home.save().then(result=>{
         console.log("upadte the home detail", result);
      }).catch(error=>{
