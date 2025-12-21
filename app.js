@@ -59,6 +59,7 @@ const upload ={
 
 
 app.use(express.static(Path.join(rootDir,"public")));
+app.use("/uploads", express.static(Path.join(rootDir, "uploads")));
 app.use(express.urlencoded());
 app.use(multer(upload).single('image'));
 
